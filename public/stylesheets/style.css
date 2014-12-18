@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+li:hover {
+  cursor: pointer;
+}
+
+#breadCrumbContainer li{
+  display: inline;
+  margin: 5px;
+}
