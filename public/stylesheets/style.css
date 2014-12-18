@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 0 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -11,7 +11,76 @@ li:hover {
   cursor: pointer;
 }
 
+#title {
+  text-align: center;
+  color: gray;
+  font: 26px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  padding: 15px;
+  border-bottom: 4px solid gray;
+}
+
+#breadCrumbContainer {
+  padding-left: 0;
+  padding: 12px;
+  border-radius: 4px;
+}
+
 #breadCrumbContainer li{
   display: inline;
   margin: 5px;
+  padding: 6px;
+  /* border: 1px solid black; */
+  background: #112233;
+  border-radius: 3px;
+  color: white;
+}
+
+#ctgry-list-bar {
+  width: 15%;
+  float: left;
+  height: 2000px;
+}
+
+#ctgry-list-bar p{
+  text-align: center;
+  color: gray;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+}
+
+#ctgry-list-bar ul{
+  padding-left: 0;
+}
+
+#ctgry-list-bar li{
+  list-style-type: none;
+  padding: 5px;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: gray;
+  padding-left: 10px;
+}
+
+#ctgry-input {
+  width: 85%;
+  padding: 5px;
+  margin: 5px 0;
+  text-align: center;
+}
+
+#ctgry-button {
+  width: 50%;
+  padding: 5px;
+  text-align: center;
+}
+
+#content {
+  margin-left: 15%;
+}
+
+#content-data, #content-desc, #content-button {
+  width: 80%;
+  max-width: 80%;
+  margin: 10px;
+  padding: 10px;
 }

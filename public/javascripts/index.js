@@ -34,12 +34,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updatebreadCrumb() {
         var parts = currentParentPath.split('/');
-        var res = '<li id="">/ > </li>';
+        var res = '<li id="">/ </li>' +  '<span> > </span>';;
         var currParent = '';
         parts.forEach(function (level) {
             if (level) {
                 currParent = currParent + '/' + level;
-                res = res + '<li id="'+ currParent +'">' + level + '> </li>';
+                res = res + '<li id="'+ currParent +'">' + level.toUpperCase() + '</li>' +
+                      '<span> > </span>';
             }
         });
         bcList.innerHTML = res;
@@ -50,13 +51,15 @@ document.addEventListener('DOMContentLoaded', function () {
             var data = JSON.parse(req.responseText);
             categories = [];
             data.forEach(function (item) {
-                categories.push(item.category);
+                categories.push(item.category.toUpperCase());
             });
             categories = categories.sort();
 
             var opt = '';
             categories.forEach(function (i) {
-                opt = opt + "<li id='"+ currentParentPath + i +"'>" + i + "</li>";
+                if (i) {
+                    opt = opt + "<li id='"+ currentParentPath + i +"'>" + i + "</li>";
+                }
             });
             categoryList.innerHTML = opt;
             updatebreadCrumb();
