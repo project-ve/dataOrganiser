@@ -83,8 +83,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function getSubCategories(e) {
         var parentPath = e.target.id;
         // update currentParentPath
-        currentParentPath = parentPath + '/';
-        sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateCategories);
+        if (parentPath !== 'breadCrumbContainer') { // ignore ul
+            currentParentPath = parentPath + '/';
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateCategories);
+        }
     }
 
     // ATTACH EVENT HANDLERS
