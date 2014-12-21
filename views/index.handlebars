@@ -1,30 +1,61 @@
 <section>
-    <p id="title">DATA ORGANISER</p> 
+    <h1 id="title">DATA ORGANISER</h1> 
 
     <ul id="bread-crumb-container">
     </ul>
 
     <aside id="ctgry-list-bar">
-        <p>CATEGORIES</p>
+        <h3>CATEGORIES</h3>
         <ul id="ctgry-list">
         </ul>
-        <p><input id="ctgry-input" placeholder="Add New Category"/></p>
-        <p><input type="button" id="ctgry-button" value="Add"/></p>
+        <div class="form-group">
+            <input type="text" id="ctgry-input" class="form-control" placeholder="Add New Category"/>
+        </div>
+        <div class="button-container-center">
+            <input type="button" id="ctgry-button" class="btn btn-primary" value="Add"/>
+        </div>
     </aside>
-    <article id="content">
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Link/Data</th>
-                    <th>Delete?</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-        <textarea id="content-desc" placeholder="Description"></textarea>
-        <textarea id="content-data" placeholder="Link/Data"></textarea>
-        <p><input type="button" id="content-button" value="Add"/></p>
-    </article>
+    <div id="home" class="jumbotron">
+        <p>
+        Welcome to the super cool data organiser. This app helps you organise
+        your data and links grouped by multi level categories.
+        
+            <h2> Some Highlights of the App: </h2>
+            <ul>
+                <li>Create custom categories on the fly.</li>
+                <li>Store related data and links grouped by categories.</li>
+                <li>Easy navigation.</li>
+            </ul>
+            <p><input type="button" id="start-button" class="btn btn-primary" value="Start"/></p>
+        </p>
+    </div>
+    <div id="main">
+        <div id="content">
+            <table  class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Link/Data</th>
+                        <th>Delete?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="button-container-center">
+                <input type="button" id="content-add-show-button" class="btn btn-primary" value="Add"/>
+            </div>
+            <form role="form" id="add-contents-form">
+                <div class="form-group">
+                    <label for="content-desc">Description:</label>
+                    <textarea id="content-desc" class="form-control" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content-data">Link/Data:</label>
+                    <textarea id="content-data" class="form-control" placeholder="Link/Data"></textarea>
+                </div>
+                <p><input type="button" id="content-button" class="btn btn-primary btn-block" value="Add"/></p>
+            </form>
+        </div>
+    </div>
 </section>

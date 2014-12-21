@@ -14,32 +14,28 @@ li:hover {
 #title {
   text-align: center;
   color: gray;
-  font: 26px "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-weight: bold;
-  padding: 15px;
-  border-bottom: 4px solid gray;
 }
 
 #bread-crumb-container {
-  padding-left: 0;
   padding: 12px;
-  border-radius: 4px;
+  margin-bottom: 50px;
 }
 
 #bread-crumb-container li{
   display: inline;
-  margin: 5px;
+  /* margin: 5px;
   padding: 6px;
-  /* border: 1px solid black; */
   background: #112233;
   border-radius: 3px;
-  color: white;
+  color: white; */
 }
 
 #ctgry-list-bar {
   width: 15%;
   float: left;
   height: 2000px;
+  padding: 10px;
+  background: #aabbcc;
 }
 
 #ctgry-list-bar p{
@@ -62,37 +58,43 @@ li:hover {
 }
 
 #ctgry-input {
-  width: 85%;
+ /*  width: 85%;
   padding: 5px;
   margin: 5px 0;
-  text-align: center;
+  text-align: center; */
 }
 
 #ctgry-button {
-  width: 50%;
+ /*  width: 50%;
   padding: 5px;
+  text-align: center; */
+}
+
+.button-container-center {
   text-align: center;
 }
 
-#content {
+#content, #bread-crumb-container, #ctgry-list-bar {
+  display: none;
+}
+
+#main {
   margin-left: 15%;
+  padding: 10px;
 }
 
 #content table {
-  margin: 10px;
-}
-
-#content tr {
-  width: 100%;
-}
-
-#content th {
-  border: 1px solid gray;
+  /* margin: 10px; */
 }
 
 #content-data, #content-desc, #content-button {
-  width: 90%;
+  /* width: 90%;
   max-width: 90%;
   margin: 10px;
-  padding: 10px;
+  padding: 10px; */
+}
+
+#add-contents-form {
+  margin-top: 50px;
+  visibility: hidden;
 }

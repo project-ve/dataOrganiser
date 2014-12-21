@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var addData = document.querySelector('#content-button');
     var dataInput = document.querySelector('#content-data');
     var dataDesc = document.querySelector('#content-desc');
+    // home
+    var start = document.querySelector('#start-button');
+    var showContentAddFormButton = document.querySelector('#content-add-show-button');
     // global
     var currentParentPath = '';
 
@@ -56,9 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
             categories = categories.sort();
 
             var opt = '';
-            categories.forEach(function (i) {
-                if (i) {
-                    opt = opt + "<li id='"+ currentParentPath + i +"'>" + i + "</li>";
+            categories.forEach(function (item) {
+                if (item && item !== "GROUP-DATA") {
+                    opt = opt + "<li id='"+ currentParentPath + item +"'>" + item + "</li>";
                 }
             });
             categoryList.innerHTML = opt;
@@ -67,13 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updatebreadCrumb() {
         var parts = currentParentPath.split('/');
-        var res = '<li id="">/ </li>' +  '<span> > </span>';;
+        var res = '<li id=""><input type="button" value="HOME" class="btn btn-info"></li>' +  '<span> > </span>';;
         var currParent = '';
         parts.forEach(function (level) {
             if (level) {
                 currParent = currParent + '/' + level;
-                res = res + '<li id="'+ currParent +'">' + level.toUpperCase() + '</li>' +
-                      '<span> > </span>';
+                res = res + '<li>' + 
+                        '<input type="button" value="'+ level.toUpperCase() +'" id="'+ currParent +'" class="btn btn-info">' +
+                        '</li>' + '<span> > </span>';
             }
         });
         bcList.innerHTML = res;
@@ -90,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         res = res + "<tr>" +
                             "<td>" + dataItem.desc + "</td>" +
                             "<td>" + dataItem.content + "</td>" +
-                            "<td><input type='button' value='delete'></td>" +
+                            "<td><input type='button' value='delete' class='btn btn-danger'></td>" +
                             "</tr>";
                     });
                     resNode.innerHTML = res;
@@ -166,8 +170,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function addContentsHandler(req) {
         if (req.readyState == 4) {
             sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateContents);
-            dataInput.value = '';
-            dataDesc.value = '';
         }
     }
 
@@ -181,9 +183,42 @@ document.addEventListener('DOMContentLoaded', function () {
             var config = {data: dataStr, contentType: "application/json"};
             sendAjaxReq('POST', '/content/add', addContentsHandler, config);
         }
+        dataInput.value = '';
+        dataDesc.value = '';
     }
 
     addData.addEventListener('click', addContents);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Start button click handling --------------------------*/
+
+    function startHandler() {
+        var content = document.querySelector('#content');
+        var ctgryList = document.querySelector('#ctgry-list-bar');
+        var bc = bcList;
+        var home = document.querySelector('#home');
+
+        content.style.display = 'block';
+        ctgryList.style.display = 'block';
+        bc.style.display = 'block';
+        home.style.display = 'none';
+    }
+
+    start.addEventListener('click', startHandler);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Content form show button click handling --------------*/
+
+    function showContentAdd() {
+        var contentAddForm = document.querySelector('#add-contents-form');
+
+        contentAddForm.style.visibility = 'visible';
+        showContentAddFormButton.style.visibility = 'hidden';
+    }
+
+    showContentAddFormButton.addEventListener('click', showContentAdd);
 
 /*---------------------------------------------------------------------------*/
 
