@@ -20,13 +20,13 @@ li:hover {
   border-bottom: 4px solid gray;
 }
 
-#breadCrumbContainer {
+#bread-crumb-container {
   padding-left: 0;
   padding: 12px;
   border-radius: 4px;
 }
 
-#breadCrumbContainer li{
+#bread-crumb-container li{
   display: inline;
   margin: 5px;
   padding: 6px;
@@ -78,9 +78,21 @@ li:hover {
   margin-left: 15%;
 }
 
+#content table {
+  margin: 10px;
+}
+
+#content tr {
+  width: 100%;
+}
+
+#content th {
+  border: 1px solid gray;
+}
+
 #content-data, #content-desc, #content-button {
-  width: 80%;
-  max-width: 80%;
+  width: 90%;
+  max-width: 90%;
   margin: 10px;
   padding: 10px;
 }

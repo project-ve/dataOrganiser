@@ -8,6 +8,7 @@ var exphbs  = require('express3-handlebars');
 
 var routes = require('./routes/index');
 var category = require('./routes/category');
+var content = require('./routes/content');
 // Database
 var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/dataOrganiser", {native_parser:true});
@@ -35,6 +36,7 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 app.use('/category', category);
+app.use('/content', content);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

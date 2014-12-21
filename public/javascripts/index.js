@@ -1,10 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // categories
     var addCategory = document.querySelector('#ctgry-button');
     var categoryInput = document.querySelector('#ctgry-input');
     var categoryList = document.querySelector('#ctgry-list');
-    var bcList = document.querySelector('#breadCrumbContainer')
     var categories = [];
+    // bread crumb
+    var bcList = document.querySelector('#bread-crumb-container');
+    // content
+    var addData = document.querySelector('#content-button');
+    var dataInput = document.querySelector('#content-data');
+    var dataDesc = document.querySelector('#content-desc');
+    // global
     var currentParentPath = '';
     
     // Helper method to send AJAX requests
@@ -51,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var data = JSON.parse(req.responseText);
             categories = [];
             data.forEach(function (item) {
-                categories.push(item.category.toUpperCase());
+                categories.push(item.category);
             });
             categories = categories.sort();
 
@@ -63,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             categoryList.innerHTML = opt;
             updatebreadCrumb();
+            updateContentsNew(req);
         }
     }
 
@@ -86,9 +94,49 @@ document.addEventListener('DOMContentLoaded', function () {
     function getSubCategories(e) {
         var parentPath = e.target.id;
         // update currentParentPath
-        if (parentPath !== 'breadCrumbContainer') { // ignore ul
+        if (parentPath !== 'bread-crumb-container') { // ignore ul
             currentParentPath = parentPath + '/';
             sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateCategories);
+        }
+    }
+
+    function updateContentsNew(req){
+        if (req.readyState == 4) {
+            var data = JSON.parse(req.responseText);
+            var res = '';
+            data.forEach(function (child) {
+                if (child.category == "GROUP-DATA") {
+                    var resNode = document.querySelector("#content tbody");
+                    child["group-data"].forEach(function (dataItem) {
+                        res = res + "<tr>" +
+                            "<td>" + dataItem.desc + "</td>" +
+                            "<td>" + dataItem.content + "</td>" +
+                            "<td><input type='button' value='delete'></td>" +
+                            "</tr>";
+                    });
+                    resNode.innerHTML = res;
+                }
+            });
+        }
+    }
+
+    function updateContents(req) {
+        if (req.readyState == 4) {
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateContentsNew);
+            dataInput.value = '';
+            dataDesc.value = '';
+        }
+    }
+
+    function addContents() {
+        var data = dataInput.value.trim();
+        var desc = dataDesc.value.trim();
+        var category = sanitizePath(currentParentPath);
+  
+        if (data && desc) {
+            var dataStr = JSON.stringify({content: data, desc: desc, category: category});
+            var config = {data: dataStr, contentType: "application/json"};
+            sendAjaxReq('POST', '/content/add', updateContents, config);
         }
     }
 
@@ -102,4 +150,6 @@ document.addEventListener('DOMContentLoaded', function () {
     (function() {
         sendAjaxReq('GET', '/category/all', updateCategories);
     })();
+    
+    addData.addEventListener('click', addContents);
 });
