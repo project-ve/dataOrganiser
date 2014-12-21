@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var dataDesc = document.querySelector('#content-desc');
     // global
     var currentParentPath = '';
-    
+
+
+/*-------------------- Helper functions -------------------------------------*/
+
     // Helper method to send AJAX requests
     function sendAjaxReq(method, path, cb, config) {
         var req = new XMLHttpRequest();
@@ -39,19 +42,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return path;
     }
 
-    function updatebreadCrumb() {
-        var parts = currentParentPath.split('/');
-        var res = '<li id="">/ </li>' +  '<span> > </span>';;
-        var currParent = '';
-        parts.forEach(function (level) {
-            if (level) {
-                currParent = currParent + '/' + level;
-                res = res + '<li id="'+ currParent +'">' + level.toUpperCase() + '</li>' +
-                      '<span> > </span>';
-            }
-        });
-        bcList.innerHTML = res;
-    }
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Generic ----------------------------------------------*/
 
     function updateCategories(req) {
         if (req.readyState == 4) {
@@ -69,38 +62,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
             categoryList.innerHTML = opt;
-            updatebreadCrumb();
-            updateContentsNew(req);
         }
     }
 
-    function addNewCategory(req) {
-        if (req.readyState == 4) {
-            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateCategories);
-            categoryInput.value = '';
-        }
-    }
-    
-    function addCategoryHandler() {
-        var newCategory = categoryInput.value.trim();
-        var alreadyExists = categories.indexOf(newCategory) > -1;
-        if (newCategory && !alreadyExists) {
-            sendAjaxReq('GET', '/category/add?category=' + sanitizePath(currentParentPath + newCategory), addNewCategory)
-        } else {
-            categoryInput.value = '';
-        }
+    function updatebreadCrumb() {
+        var parts = currentParentPath.split('/');
+        var res = '<li id="">/ </li>' +  '<span> > </span>';;
+        var currParent = '';
+        parts.forEach(function (level) {
+            if (level) {
+                currParent = currParent + '/' + level;
+                res = res + '<li id="'+ currParent +'">' + level.toUpperCase() + '</li>' +
+                      '<span> > </span>';
+            }
+        });
+        bcList.innerHTML = res;
     }
 
-    function getSubCategories(e) {
-        var parentPath = e.target.id;
-        // update currentParentPath
-        if (parentPath !== 'bread-crumb-container') { // ignore ul
-            currentParentPath = parentPath + '/';
-            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateCategories);
-        }
-    }
-
-    function updateContentsNew(req){
+    function updateContents(req){
         if (req.readyState == 4) {
             var data = JSON.parse(req.responseText);
             var res = '';
@@ -120,9 +99,73 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function updateContents(req) {
+    function updateAllPanes(req) {
+        // Call this on click
+        // 1. bread crumbs
+        // 2. category list items
+        // Update bread crumbs, category list items and contents table
+        updateCategories(req);
+        updatebreadCrumb();
+        updateContents(req);
+    }
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Add a new category -----------------------------------*/
+
+    function addCategorySuccess(req) {
         if (req.readyState == 4) {
-            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateContentsNew);
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateCategories);
+        }
+    }
+    
+    function addCategoryHandler() {
+        var newCategory = categoryInput.value.trim();
+        var alreadyExists = categories.indexOf(newCategory) > -1;
+        if (newCategory && !alreadyExists) {
+            var newCategoryPath = currentParentPath + newCategory;
+            sendAjaxReq('GET', '/category/add?category=' + sanitizePath(newCategoryPath), addCategorySuccess);
+        }
+        categoryInput.value = '';
+    }
+
+    addCategory.addEventListener('click', addCategoryHandler);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Bread Crumb click handling ---------------------------*/
+
+    function bcListHandler(e) {
+        var parentPath = e.target.id;
+        // update currentParentPath
+        if (parentPath !== 'bread-crumb-container') {
+            currentParentPath = parentPath + '/';
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
+        }
+    }
+
+    bcList.addEventListener('click', bcListHandler);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Category Item click handling -------------------------*/
+
+    function categoryListHandler(e) {
+        var parentPath = e.target.id;
+        // update currentParentPath
+        currentParentPath = parentPath + '/';
+        sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
+    }
+
+    categoryList.addEventListener('click', categoryListHandler);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Add contents click handling --------------------------*/
+
+    function addContentsHandler(req) {
+        if (req.readyState == 4) {
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateContents);
             dataInput.value = '';
             dataDesc.value = '';
         }
@@ -136,20 +179,17 @@ document.addEventListener('DOMContentLoaded', function () {
         if (data && desc) {
             var dataStr = JSON.stringify({content: data, desc: desc, category: category});
             var config = {data: dataStr, contentType: "application/json"};
-            sendAjaxReq('POST', '/content/add', updateContents, config);
+            sendAjaxReq('POST', '/content/add', addContentsHandler, config);
         }
     }
 
-    // ATTACH EVENT HANDLERS
+    addData.addEventListener('click', addContents);
 
-    addCategory.addEventListener('click', addCategoryHandler);
-    categoryList.addEventListener('click', getSubCategories);
-    bcList.addEventListener('click', getSubCategories);
+/*---------------------------------------------------------------------------*/
 
     // update categories on page load
     (function() {
         sendAjaxReq('GET', '/category/all', updateCategories);
+        updatebreadCrumb();
     })();
-    
-    addData.addEventListener('click', addContents);
 });
