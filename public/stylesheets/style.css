@@ -1,6 +1,5 @@
 body {
   padding: 0 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -16,6 +15,16 @@ li:hover {
   color: gray;
   padding: 30px;
   background: black;
+}
+
+#home {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#start-button-container {
+  text-align: center;
+  margin-top: 25px;
 }
 
 #bread-crumb-container {
@@ -52,11 +61,7 @@ li:hover {
 }
 
 #ctgry-list-bar li{
-  list-style-type: none;
-  padding: 5px;
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   color: gray;
-  padding-left: 10px;
 }
 
 #ctgry-input {

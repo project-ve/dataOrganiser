@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var opt = '';
             categories.forEach(function (item) {
                 if (item && item !== "GROUP-DATA") {
-                    opt = opt + "<li id='"+ currentParentPath + item +"'>" + item + "</li>";
+                    opt = opt + "<li class='list-group-item' id='"+ currentParentPath + item +"'>" + item + "</li>";
                 }
             });
             categoryList.innerHTML = opt;
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function startHandler() {
         var ctgryList = document.querySelector('#ctgry-list-bar');
         var bc = bcList;
-        var home = document.querySelector('#home');
+        var home = document.querySelector('#home-container');
 
         recentActivity.style.display = 'block';
         ctgryList.style.display = 'block';

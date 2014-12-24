@@ -6,7 +6,7 @@
 
     <aside id="ctgry-list-bar">
         <h3>CATEGORIES</h3>
-        <ul id="ctgry-list">
+        <ul id="ctgry-list" class="list-group">
         </ul>
         <div class="form-group">
             <input type="text" id="ctgry-input" class="form-control" placeholder="Add New Category"/>
@@ -15,19 +15,21 @@
             <input type="button" id="ctgry-button" class="btn btn-primary" value="Add"/>
         </div>
     </aside>
-    <div id="home" class="jumbotron">
-        <p>
-        Welcome to the super cool data organiser. This app helps you organise
-        your data and links grouped by multi level categories.
-        
-            <h2> Some Highlights of the App: </h2>
-            <ul>
-                <li>Create custom categories on the fly.</li>
-                <li>Store related data and links grouped by categories.</li>
-                <li>Easy navigation.</li>
-            </ul>
-            <p><input type="button" id="start-button" class="btn btn-primary" value="Start"/></p>
-        </p>
+    <div id="home-container" class="jumbotron">
+        <div id="home">
+            <p>
+            Welcome to Data Organiser. This app helps you organise your most favorite articles (links),
+            web sites, resources etc, grouped by any depth categories.
+            
+                <h2> Some Highlights of the App: </h2>
+                <ul class="list-group">
+                    <li class="list-group-item">Create and delete custom categories on the fly.</li>
+                    <li class="list-group-item">Store related data and links grouped by categories.</li>
+                    <li class="list-group-item">Easy navigation.</li>
+                </ul>
+                <p id="start-button-container"><input type="button" id="start-button" class="btn btn-primary" value="Start"/></p>
+            </p>
+        </div>
     </div>
     <div id="main">
         <div id="content">
