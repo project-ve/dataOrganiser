@@ -14,11 +14,13 @@ li:hover {
 #title {
   text-align: center;
   color: gray;
+  padding: 30px;
+  background: black;
 }
 
 #bread-crumb-container {
   padding: 12px;
-  margin-bottom: 50px;
+  background: #eeeeee;
 }
 
 #bread-crumb-container li{
@@ -35,7 +37,7 @@ li:hover {
   float: left;
   height: 2000px;
   padding: 10px;
-  background: #aabbcc;
+  background: #eeeeee;
 }
 
 #ctgry-list-bar p{
@@ -75,6 +77,10 @@ li:hover {
 }
 
 #content, #bread-crumb-container, #ctgry-list-bar {
+  display: none;
+}
+
+#recentActivity {
   display: none;
 }
 

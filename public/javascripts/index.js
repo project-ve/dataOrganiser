@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var addData = document.querySelector('#content-button');
     var dataInput = document.querySelector('#content-data');
     var dataDesc = document.querySelector('#content-desc');
+    var contentTable = document.querySelector('#content table');
+    var recentActivity = document.querySelector('#recentActivity');
+    var content = document.querySelector('#content');
     // home
     var start = document.querySelector('#start-button');
     var showContentAddFormButton = document.querySelector('#content-add-show-button');
@@ -70,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updatebreadCrumb() {
         var parts = currentParentPath.split('/');
-        var res = '<li id=""><input type="button" value="HOME" class="btn btn-info"></li>' +  '<span> > </span>';;
+        var res = '<li id=""><input type="button" value="HOME" id="" class="btn btn-info"></li>' +  '<span> > </span>';;
         var currParent = '';
         parts.forEach(function (level) {
             if (level) {
@@ -91,11 +94,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (child.category == "GROUP-DATA") {
                     var resNode = document.querySelector("#content tbody");
                     child["group-data"].forEach(function (dataItem) {
-                        res = res + "<tr>" +
-                            "<td>" + dataItem.desc + "</td>" +
-                            "<td>" + dataItem.content + "</td>" +
-                            "<td><input type='button' value='delete' class='btn btn-danger'></td>" +
-                            "</tr>";
+                        if (dataItem) {
+                            res = res + "<tr>" +
+                                "<td>" + dataItem.desc + "</td>" +
+                                "<td>" + dataItem.content + "</td>" +
+                                "<td><input type='button' value='delete' id='"+ dataItem.index +"' class='btn btn-danger'></td>" +
+                                "</tr>";
+                        }
                     });
                     resNode.innerHTML = res;
                 }
@@ -143,8 +148,15 @@ document.addEventListener('DOMContentLoaded', function () {
         var parentPath = e.target.id;
         // update currentParentPath
         if (parentPath !== 'bread-crumb-container') {
-            currentParentPath = parentPath + '/';
-            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
+            if (parentPath == "") {
+                content.style.display = 'none';
+                recentActivity.style.display = 'block';
+                currentParentPath = parentPath + '/';
+                sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
+            } else {
+                currentParentPath = parentPath + '/';
+                sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
+            }
         }
     }
 
@@ -156,6 +168,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function categoryListHandler(e) {
         var parentPath = e.target.id;
+        content.style.display = 'block';
+        recentActivity.style.display = 'none';
         // update currentParentPath
         currentParentPath = parentPath + '/';
         sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(parentPath), updateAllPanes);
@@ -191,21 +205,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /*---------------------------------------------------------------------------*/
 
-/*-------------------- Start button click handling --------------------------*/
+/*-------------------- Delete content click handling -------------------------*/
 
-    function startHandler() {
-        var content = document.querySelector('#content');
-        var ctgryList = document.querySelector('#ctgry-list-bar');
-        var bc = bcList;
-        var home = document.querySelector('#home');
-
-        content.style.display = 'block';
-        ctgryList.style.display = 'block';
-        bc.style.display = 'block';
-        home.style.display = 'none';
+    function deleteContentsHandler(req) {
+        if (req.readyState == 4) {
+            sendAjaxReq('GET', '/category/all?parent=' + sanitizePath(currentParentPath), updateContents);
+        }
     }
 
-    start.addEventListener('click', startHandler);
+    function deleteHandler(e) {
+        if (e.target.classList.contains("btn-danger")) {
+            var index = e.target.id;
+            var category = sanitizePath(currentParentPath);
+            var dataStr = JSON.stringify({index: index, category: category});
+            var config = {data: dataStr, contentType: "application/json"};
+            sendAjaxReq('POST', '/content/delete', deleteContentsHandler, config);
+        }
+    }
+
+    contentTable.addEventListener('click', deleteHandler);
 
 /*---------------------------------------------------------------------------*/
 
@@ -219,6 +237,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     showContentAddFormButton.addEventListener('click', showContentAdd);
+
+/*---------------------------------------------------------------------------*/
+
+/*-------------------- Start button click handling --------------------------*/
+
+    function startHandler() {
+        var ctgryList = document.querySelector('#ctgry-list-bar');
+        var bc = bcList;
+        var home = document.querySelector('#home');
+
+        recentActivity.style.display = 'block';
+        ctgryList.style.display = 'block';
+        bc.style.display = 'block';
+        home.style.display = 'none';
+    }
+
+    start.addEventListener('click', startHandler);
 
 /*---------------------------------------------------------------------------*/
 
