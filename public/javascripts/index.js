@@ -246,11 +246,13 @@ document.addEventListener('DOMContentLoaded', function () {
         var ctgryList = document.querySelector('#ctgry-list-bar');
         var bc = bcList;
         var home = document.querySelector('#home-container');
+        var main = document.querySelector('#main');
 
         recentActivity.style.display = 'block';
         ctgryList.style.display = 'block';
         bc.style.display = 'block';
         home.style.display = 'none';
+        main.style.display = 'block';
     }
 
     start.addEventListener('click', startHandler);

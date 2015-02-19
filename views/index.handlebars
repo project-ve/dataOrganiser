@@ -1,66 +1,86 @@
-<section>
-    <h1 id="title">DATA ORGANISER</h1> 
-
-    <ul id="bread-crumb-container">
-    </ul>
-
-    <aside id="ctgry-list-bar">
-        <h3>CATEGORIES</h3>
-        <ul id="ctgry-list" class="list-group">
-        </ul>
-        <div class="form-group">
-            <input type="text" id="ctgry-input" class="form-control" placeholder="Add New Category"/>
-        </div>
-        <div class="button-container-center">
-            <input type="button" id="ctgry-button" class="btn btn-primary" value="Add"/>
-        </div>
-    </aside>
-    <div id="home-container" class="jumbotron">
-        <div id="home">
-            <p>
-            Welcome to Data Organiser. This app helps you organise your most favorite articles (links),
-            web sites, resources etc, grouped by any depth categories.
-            
-                <h2> Some Highlights of the App: </h2>
-                <ul class="list-group">
-                    <li class="list-group-item">Create and delete custom categories on the fly.</li>
-                    <li class="list-group-item">Store related data and links grouped by categories.</li>
-                    <li class="list-group-item">Easy navigation.</li>
-                </ul>
-                <p id="start-button-container"><input type="button" id="start-button" class="btn btn-primary" value="Start"/></p>
-            </p>
+<div class="container">
+    <div class="row r1 text-center">
+        <div class="col-md-12">
+            <h1 id="title">DATA ORGANISER</h1>
         </div>
     </div>
-    <div id="main">
-        <div id="content">
-            <table  class="table table-striped table-bordered table-condensed">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Link/Data</th>
-                        <th>Delete?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <div class="button-container-center">
-                <input type="button" id="content-add-show-button" class="btn btn-primary" value="Add"/>
+
+    <div id="bread-crumb-container" class="row">
+        <div class="col-md-12">
+            <ul>
+            </ul>
+        </div>
+    </div>
+
+    <div id="home-container" class="row r2">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <div>
+                <p>
+                Welcome to Data Organiser. This app helps you organise your most favorite articles (links),
+                web sites, resources etc, grouped by any depth categories.
+                
+                    <h2> Some Highlights of the App: </h2>
+                    <ul class="list-group" id="home-list">
+                        <li class="list-group-item">Create and delete custom categories on the fly.</li>
+                        <li class="list-group-item">Store related data and links grouped by categories.</li>
+                        <li class="list-group-item">Easy navigation.</li>
+                    </ul>
+                    <p id="start-button-container"><input type="button" id="start-button" class="btn btn-primary" value="Start"/></p>
+                </p>
             </div>
-            <form role="form" id="add-contents-form">
-                <div class="form-group">
-                    <label for="content-desc">Description:</label>
-                    <textarea id="content-desc" class="form-control" placeholder="Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="content-data">Link/Data:</label>
-                    <textarea id="content-data" class="form-control" placeholder="Link/Data"></textarea>
-                </div>
-                <p><input type="button" id="content-button" class="btn btn-primary btn-block" value="Add"/></p>
-            </form>
         </div>
-        <div id="recentActivity">
-            <p> Show the recent activity here </p>
+        <div class="col-md-3">
         </div>
     </div>
-</section>
+
+    <div class="row">
+        <div id="ctgry-list-bar" class="col-md-3">
+            <aside>
+                <h3>CATEGORIES</h3>
+                <ul id="ctgry-list" class="list-group">
+                </ul>
+                <div class="form-group">
+                    <input type="text" id="ctgry-input" class="form-control" placeholder="Add New Category"/>
+                </div>
+                <div class="button-container-center">
+                    <input type="button" id="ctgry-button" class="btn btn-primary" value="Add"/>
+                </div>
+            </aside>
+            <br>
+        </div>
+        <div id="main" class="col-md-9">
+            <div id="content">
+                <table  class="table table-striped table-bordered table-condensed table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Link/Data</th>
+                            <th>Delete?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="button-container-center">
+                    <input type="button" id="content-add-show-button" class="btn btn-primary" value="Add"/>
+                </div>
+                <form role="form" id="add-contents-form">
+                    <div class="form-group">
+                        <label for="content-desc">Description:</label>
+                        <textarea id="content-desc" class="form-control" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="content-data">Link/Data:</label>
+                        <textarea id="content-data" class="form-control" placeholder="Link/Data"></textarea>
+                    </div>
+                    <p><input type="button" id="content-button" class="btn btn-primary btn-block" value="Add"/></p>
+                </form>
+            </div>
+            <div id="recentActivity">
+                <p> Show the recent activity here </p>
+            </div>
+        </div>
+    </div>
+</div>
